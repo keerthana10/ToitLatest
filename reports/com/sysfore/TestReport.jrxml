@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8"  ?>
+<!-- Created with iReport - A designer for JasperReports -->
+<!DOCTYPE jasperReport PUBLIC "//JasperReports//DTD Report Design//EN" "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
+<jasperReport
+		 name="TestReport"
+		 columnCount="1"
+		 printOrder="Vertical"
+		 orientation="Landscape"
+		 pageWidth="595"
+		 pageHeight="421"
+		 columnWidth="535"
+		 columnSpacing="0"
+		 leftMargin="30"
+		 rightMargin="30"
+		 topMargin="20"
+		 bottomMargin="20"
+		 whenNoDataType="NoPages"
+		 isTitleNewPage="false"
+		 isSummaryNewPage="false">
+	<property name="ireport.scriptlethandling" value="0" />
+	<property name="ireport.encoding" value="UTF-8" />
+	<import value="java.util.*" />
+	<import value="net.sf.jasperreports.engine.*" />
+	<import value="net.sf.jasperreports.engine.data.*" />
+
+	<queryString><![CDATA[select distinct t.DOCUMENTNO, 
+SUM(tl.PRICE)  as LINEAMT,
+t.BILLAMOUNT as TOTALAMT, 
+r.datenew AS BILLDATE, 
+(select name from places where id=t.tableid) as TABLENAME,
+(select name from people where id=t.person) as PERSON from tickets t
+left join receipts r on r.id=t.id
+left join ticketlines tl on tl.ticket=t.id
+where SERVICECHARGEEXEMPT='N'
+and ISCANCELTICKET='N'
+group by t.id order by R.DATENEW;]]></queryString>
+
+	<field name="DOCUMENTNO" class="java.lang.String"/>
+	<field name="LINEAMT" class="java.lang.Double"/>
+	<field name="TOTALAMT" class="java.lang.Double"/>
+	<field name="BILLDATE" class="java.util.Date"/>
+	<field name="TABLENAME" class="java.lang.String"/>
+	<field name="PERSON" class="java.lang.String"/>
+
+		<background>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</background>
+		<title>
+			<band height="50"  isSplitAllowed="true" >
+			</band>
+		</title>
+		<pageHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</pageHeader>
+		<columnHeader>
+			<band height="30"  isSplitAllowed="true" >
+				<staticText>
+					<reportElement
+						x="0"
+						y="3"
+						width="85"
+						height="27"
+						key="staticText-1"/>
+					<box></box>
+					<textElement>
+						<font fontName="Script MT Bold" size="12"/>
+					</textElement>
+				<text><![CDATA[Doc.No.]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="95"
+						y="3"
+						width="81"
+						height="27"
+						key="staticText-2"/>
+					<box></box>
+					<textElement>
+						<font fontName="Script MT Bold" size="12"/>
+					</textElement>
+				<text><![CDATA[Line Amt.]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="186"
+						y="3"
+						width="75"
+						height="27"
+						key="staticText-3"/>
+					<box></box>
+					<textElement>
+						<font fontName="Script MT Bold" size="12"/>
+					</textElement>
+				<text><![CDATA[Total]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="272"
+						y="3"
+						width="69"
+						height="27"
+						key="staticText-4"/>
+					<box></box>
+					<textElement>
+						<font fontName="Script MT Bold" size="12"/>
+					</textElement>
+				<text><![CDATA[BillDate]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="371"
+						y="3"
+						width="64"
+						height="27"
+						key="staticText-5"/>
+					<box></box>
+					<textElement>
+						<font fontName="Script MT Bold" size="12"/>
+					</textElement>
+				<text><![CDATA[TableName]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="449"
+						y="3"
+						width="60"
+						height="27"
+						key="staticText-6"/>
+					<box></box>
+					<textElement>
+						<font fontName="Script MT Bold" size="12"/>
+					</textElement>
+				<text><![CDATA[Person]]></text>
+				</staticText>
+			</band>
+		</columnHeader>
+		<detail>
+			<band height="50"  isSplitAllowed="true" >
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="0"
+						y="0"
+						width="100"
+						height="18"
+						key="textField"/>
+					<box></box>
+					<textElement>
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{DOCUMENTNO}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="##0.00" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="100"
+						y="0"
+						width="81"
+						height="23"
+						key="textField"/>
+					<box></box>
+					<textElement>
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$F{LINEAMT}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="##0.00" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="181"
+						y="5"
+						width="91"
+						height="18"
+						key="textField"/>
+					<box></box>
+					<textElement>
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$F{TOTALAMT}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="272"
+						y="5"
+						width="81"
+						height="18"
+						key="textField"/>
+					<box></box>
+					<textElement>
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.util.Date"><![CDATA[$F{BILLDATE}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="380"
+						y="5"
+						width="49"
+						height="18"
+						key="textField"/>
+					<box></box>
+					<textElement>
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{TABLENAME}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="441"
+						y="5"
+						width="83"
+						height="18"
+						key="textField"/>
+					<box></box>
+					<textElement>
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{PERSON}]]></textFieldExpression>
+				</textField>
+			</band>
+		</detail>
+		<columnFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</columnFooter>
+		<pageFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</pageFooter>
+		<summary>
+			<band height="50"  isSplitAllowed="true" >
+			</band>
+		</summary>
+</jasperReport>
