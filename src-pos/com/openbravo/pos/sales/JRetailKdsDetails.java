@@ -42,6 +42,7 @@ public class JRetailKdsDetails extends JDialog {
     DefaultTableModel itemsTableModel;
     List productTypeList=new ArrayList();
    static DataLogicReceipts dlReceipts;
+   static ServedTransactInfo slist=null;
     static Map<String,String> userMap;
   
     
@@ -68,17 +69,21 @@ public class JRetailKdsDetails extends JDialog {
     }
     
     public static void showItemsScreen(Component parent, RetailTicketLineInfo Info, DataLogicReceipts dlReceipt,Map map) {
-       lineInfo = Info;
-       userMap=map;
-        Window window = getWindow(parent);
-        dlReceipts=dlReceipt;
-        JRetailKdsDetails myMsg;
-        if (window instanceof Frame) {
-            myMsg = new JRetailKdsDetails((Frame) window, true);
-        } else {
-            myMsg = new JRetailKdsDetails((Dialog) window, true);
-        }
-        myMsg.init(dlReceipts);
+        
+            lineInfo = Info;
+            userMap=map;
+             Window window = getWindow(parent);
+             dlReceipts=dlReceipt;
+             JRetailKdsDetails myMsg;
+             
+             
+             if (window instanceof Frame) {
+                 myMsg = new JRetailKdsDetails((Frame) window, true);
+             } else {
+                 myMsg = new JRetailKdsDetails((Dialog) window, true);
+             }
+             myMsg.init(dlReceipts);
+        
     }
     
     private static Window getWindow(Component parent) {
@@ -105,8 +110,33 @@ public class JRetailKdsDetails extends JDialog {
         if(lineInfo.getServedTime()!=null){
         servedTime=DateFormats.DateToString(lineInfo.getServedTime());
         }
-       itemsTableModel.addRow(new Object[]{orderTime,userMap.get(lineInfo.getKotuser()),servedTime,userMap.get(lineInfo.getServedBy())}); 
-
+        
+         //NewKDS Mar20,2017
+                        System.out.println("New KDS March 20,2017");                 
+                                        
+                         System.out.println(lineInfo.getTbl_orderId());
+                   //  java.util.List<ServedTransactInfo> slist=dlReceipts.getServedTransactTicketList(m_oTicket.getLine(i).getTbl_orderId());
+                               java.util.List<ServedTransactInfo> slist;
+        try {
+            slist= dlReceipts.getServedTransactTicketList(lineInfo.getTbl_orderId());
+            for(ServedTransactInfo rline:slist)
+                              {
+                                   //System.out.println(rline.getId());
+                                        System.out.println(rline.getServedtransactBy());
+                                        String servedUserName=dlReceipts.getUserName(rline.getServedtransactBy());
+                                         System.out.println(servedUserName);
+                                           String servedtransTime= rline.getServedtransactTime();
+                                           itemsTableModel.addRow(new Object[]{orderTime,userMap.get(lineInfo.getKotuser()),servedtransTime,servedUserName}); 
+                              }
+        } catch (BasicException ex) {
+            Logger.getLogger(JRetailKdsDetails.class.getName()).log(Level.SEVERE, null, ex);
+        }
+                              
+             
+           //old code
+      // itemsTableModel.addRow(new Object[]{orderTime,userMap.get(lineInfo.getKotuser()),servedTime,userMap.get(lineInfo.getServedBy())}); 
+        //Ne KDS Mar 20,2017
+ 
         
     }
 

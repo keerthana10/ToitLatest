@@ -92,6 +92,8 @@ import com.openbravo.pos.sales.restaurant.JRetailBufferWindow;
 import com.openbravo.pos.sales.restaurant.JRetailTicketsBagRestaurant;
 import com.openbravo.pos.sales.restaurant.Place;
 
+
+
 import com.openbravo.pos.ticket.ProductInfoExt;
 
 import com.openbravo.pos.ticket.TaxInfo;
@@ -309,6 +311,7 @@ public abstract class JRetailPanelTicket extends JPanel implements JPanelView, B
     public int oldordernum;
         public int newordernum;
         public String loginUserId;
+       // private java.util.List<ServedTransactInfo> servedTransactlist;
     /**
      * Creates new form JTicketView
      */
@@ -6242,7 +6245,10 @@ public abstract class JRetailPanelTicket extends JPanel implements JPanelView, B
                 Toolkit.getDefaultToolkit().beep(); // no line selected
             } else {
                 try {
+                         
+                 
                     RetailTicketLineInfo newline = JRetailProductLineEdit.showMessage(this, m_App, m_oTicket.getLine(i));
+                
                     if (newline != null) {
                         logger.info("updated in edit action");
                         // line has been modified
@@ -6264,7 +6270,11 @@ public abstract class JRetailPanelTicket extends JPanel implements JPanelView, B
             if (userMap.isEmpty()) {
                 populateUsers();
             }
-            JRetailKdsDetails.showItemsScreen(this, m_oTicket.getLine(i), dlReceipts, userMap);
+            
+         
+                          JRetailKdsDetails.showItemsScreen(this, m_oTicket.getLine(i), dlReceipts, userMap);   
+                         
+
         }
     }//GEN-LAST:event_m_jEditLineActionPerformed
 

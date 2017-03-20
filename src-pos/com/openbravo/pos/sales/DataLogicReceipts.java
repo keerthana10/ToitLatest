@@ -995,5 +995,16 @@ new PreparedSentence(s, "UPDATE SERVEDTRANSACTION SET KOTDATE = NOW(),TXSTATUS =
         
     }
  
+ 
+ public final List<ServedTransactInfo> getServedTransactTicketList(String orderitemid) throws BasicException {
+//System.out.println("orderitem id"+orderitemid);
+        return (List<ServedTransactInfo>) new StaticSentence(s, "SELECT ID,SERVEDBY,SERVEDTIME FROM SERVEDTRANSACTION WHERE ORDERITEM_ID = '" + orderitemid + "'",null, new SerializerReadClass(ServedTransactInfo.class)).list();
+    }
+ 
+ 
+ public  String getUserName(String id) throws BasicException{
+         Object[] record = (Object[]) new StaticSentence(s, "SELECT NAME FROM PEOPLE WHERE ID='" + id + "'", SerializerWriteString.INSTANCE, new SerializerReadBasic(new Datas[]{Datas.STRING})).find();
+        return record == null ? "" :  record[0].toString();
+ }
 
 }//end class
