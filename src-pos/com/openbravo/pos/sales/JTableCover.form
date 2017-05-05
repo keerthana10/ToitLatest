@@ -36,7 +36,7 @@
                       <EmptySpace min="-2" pref="43" max="-2" attributes="0"/>
                       <Component id="jLabel1" min="-2" pref="94" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="m_jCovers" pref="150" max="32767" attributes="0"/>
+                      <Component id="m_jCovers" pref="152" max="32767" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="76" max="-2" attributes="0"/>
@@ -130,6 +130,9 @@
       </Properties>
     </Component>
     <Component class="com.openbravo.editor.JEditorNumberKeys" name="m_jKeys">
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="m_jKeysActionPerformed"/>
+      </Events>
     </Component>
     <Component class="com.openbravo.editor.JEditorDouble" name="m_jCovers">
     </Component>

@@ -1006,5 +1006,41 @@ new PreparedSentence(s, "UPDATE SERVEDTRANSACTION SET KOTDATE = NOW(),TXSTATUS =
          Object[] record = (Object[]) new StaticSentence(s, "SELECT NAME FROM PEOPLE WHERE ID='" + id + "'", SerializerWriteString.INSTANCE, new SerializerReadBasic(new Datas[]{Datas.STRING})).find();
         return record == null ? "" :  record[0].toString();
  }
+ public final List<PaymentInfo> getPaymentList() throws BasicException {
+//System.out.println("orderitem id"+orderitemid);
+        return (List<PaymentInfo>) new StaticSentence(s, "SELECT ID,RECEIPT,STATUSTOTAL,TRANSID,CHEQUENOS,STAFF FROM PAYMENTS",null, new SerializerReadClass(ServedTransactInfo.class)).list();
+    }
+ 
+ 
+// public void insertShiftCollection(String mode,double total) {
+     public final void insertShiftCollection(String mode) {
+      System.out.println(" Mode"+"Total"+mode);
+//        String uniqtableid=uniq_tableid;
+//      
+//        int begin=0;
+//        System.out.println("uniq table id"+uniq_tableid);
+//        for (RetailTicketLineInfo l : m_oTicket.getLines()) {
+//             
+//             begin++;
+//             if(l.getTbl_orderId().equals(uniqtableid))            
+//             {
+//                 System.out.println("id" + begin+" check from insertserved txn"+uniqtableid);
+//             
+//        
+//      Object[] values = new Object[] { UUID.randomUUID().toString(),m_oTicket.getOrderId(),m_oTicket.getPlaceId(),l.getTbl_orderId(),txstatus,l.getKotid(),l.getDuplicateProductName(),l.getMultiply(),l.getPreparationTime(),l.getKotdate(),l.getKdsPrepareStatus(),l.getInstruction(),l.getAddonId(),l.getPrimaryAddon(),l.getProductionAreaType(),l.getStation(),l.getPreparationStatus(),l.getServedBy(),l.getServedTime(),0};
+//      Datas[] datas = new Datas[] { Datas.STRING,Datas.INT,Datas.STRING,Datas.STRING,Datas.STRING,Datas.INT, Datas.STRING, Datas.DOUBLE, Datas.STRING, Datas.TIMESTAMP, Datas.STRING, Datas.STRING, Datas.STRING, Datas.INT, Datas.STRING, Datas.STRING, Datas.INT, Datas.STRING,Datas.TIMESTAMP,Datas.INT};
+//
+//            
+//            try { 
+//     new PreparedSentence(s, "INSERT INTO SERVEDTRANSACTION (ID,ORDERNUM,TABLEID,ORDERITEM_ID,TXSTATUS,KOTID,PRODUCTNAME,MULTIPLY,PREPARATIONTIME,KOTDATE,KDSPREPARESTATUS,INSTRUCTION,ADDONID,PRIMARYADDON,PRODUCTIONAREATYPE,STATION,PREPARATIONSTATUS,SERVEDBY,SERVEDTIME,UPDATED,ISKDS) VALUES (?,?,?,?,'ADD',?,?,?,?,?,?,?,?,?,?,?,?,?,?,NOW(),?)",new SerializerWriteBasicExt(datas, new int[]{ 0, 1, 2, 3, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17,18,19})).exec(values);
+//
+//            } catch (BasicException ex) {
+//                ex.printStackTrace();
+//                //Logger.getLogger(DataLogicReceipts.class.getName()).log(Level.SEVERE, null, ex);
+//            }//end catch
+//            }//end if
+//        }//end for
+//      
+    }//end fn.
 
 }//end class

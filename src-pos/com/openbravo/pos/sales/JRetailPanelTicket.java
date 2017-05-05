@@ -90,6 +90,7 @@ import static com.openbravo.pos.sales.JRetailKdsDetails.userMap;
 import static com.openbravo.pos.sales.JRetailTicketsBag.m_App;
 import com.openbravo.pos.sales.restaurant.JRetailBufferWindow;
 import com.openbravo.pos.sales.restaurant.JRetailTicketsBagRestaurant;
+import com.openbravo.pos.sales.restaurant.JRetailTicketsBagRestaurantMap;
 import com.openbravo.pos.sales.restaurant.Place;
 
 
@@ -146,6 +147,7 @@ import net.sf.jasperreports.engine.xml.JRXmlLoader;
 import org.apache.commons.lang.WordUtils;
 import com.openbravo.pos.ticket.MenuInfo;
 import com.openbravo.util.date.DateFormats;
+import com.openbravo.pos.sales.JCash;
 
 /**
  *
@@ -1835,6 +1837,21 @@ public abstract class JRetailPanelTicket extends JPanel implements JPanelView, B
         m_jBtnCatDiscount.setVisible(false);
         logger.info("After main activate method");
     }
+public void getCashLoginID()
+{ System.out.println("LoginpeopleId /userId/serveuserId");
+     String role = m_App.getAppUserView().getUser().getRole();
+        loginUserId=m_App.getAppUserView().getUser().getId();
+        System.out.println("LoginpeopleId /userId/serveuserId"+loginUserId);
+        try {
+            roleName = dlReceipts.getRoleByUser(role);
+        } catch (BasicException ex) {
+            logger.info("exception in roleName" + ex.getMessage());
+            Logger.getLogger(JRetailPanelTicket.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        System.out.println("roleName in activate" + roleName);
+    System.out.println("From get Login JCAsh-LoginpeopleId /userId/serveuserId"+loginUserId);
+    //return loginUserId;
+}
 
     public void getServiceCharge(String isHomeDelivery) {
         String businessTypeId = null;
@@ -6653,6 +6670,12 @@ System.out.println("onkotpunch");
 
                                           //  dlReceipts.insertservedhistory(m_oTicket);
                                                  System.out.println("Before Insert 12"+i);
+                                                 //On March 12th
+                                                 String txstatus1="ADD";
+                        String tableid_unique1=uniqueProductionAreas.get(i).getTbl_orderId();
+                        dlReceipts.insertServedTransaction(m_oTicket,txstatus1,tableid_unique1);
+                        
+                                                //  dlReceipts.insertServedTransaction(m_oTicket,txstatus,tableid_unique);
         //dlReceipts.insertServedTransaction(m_oTicket,"ADD",tableid_unique);
                     }
                     kotaction = 1;

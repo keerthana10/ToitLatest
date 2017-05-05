@@ -82,6 +82,9 @@ public class JRetailTicketsBagRestaurantMap extends JRetailTicketsBag {
     private static String splitId;
      public String oldtableId;
       public String movetableId;
+          public JCash m_jcash;
+          private JRetailPanelTicket jrpcash;
+         public String jrpcashloginid;
 
     /**
      * Creates new form JTicketsBagRestaurant
@@ -366,6 +369,7 @@ public class JRetailTicketsBagRestaurantMap extends JRetailTicketsBag {
     }
 
     private void showMessage(JRetailTicketsBagRestaurantMap aThis, String msg) {
+        //System.out.println("1234-Jretailticketbagrestaurantmap");
         JOptionPane.showMessageDialog(aThis, getLabelPanel(msg), "Message",
                 JOptionPane.INFORMATION_MESSAGE);
 
@@ -1487,6 +1491,7 @@ logger.info("The Table has been moved to : " + m_PlaceCurrent.getName()+" with o
         m_jbtnRefresh = new javax.swing.JButton();
         m_jText = new javax.swing.JLabel();
         m_jbtnLogout = new javax.swing.JButton();
+        m_jbtnCollectionTally = new javax.swing.JButton();
 
         setLayout(new java.awt.CardLayout());
 
@@ -1528,6 +1533,19 @@ logger.info("The Table has been moved to : " + m_PlaceCurrent.getName()+" with o
             }
         });
 
+        m_jbtnCollectionTally.setText("Collection Tally");
+        m_jbtnCollectionTally.setFocusPainted(false);
+        m_jbtnCollectionTally.setFocusable(false);
+        m_jbtnCollectionTally.setMargin(new java.awt.Insets(8, 14, 8, 14));
+        m_jbtnCollectionTally.setMaximumSize(new java.awt.Dimension(95, 36));
+        m_jbtnCollectionTally.setMinimumSize(new java.awt.Dimension(95, 36));
+        m_jbtnCollectionTally.setRequestFocusEnabled(false);
+        m_jbtnCollectionTally.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                m_jbtnCollectionTallyActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -1538,24 +1556,30 @@ logger.info("The Table has been moved to : " + m_PlaceCurrent.getName()+" with o
                 .addGap(5, 5, 5)
                 .addComponent(m_jbtnRefresh)
                 .addGap(5, 5, 5)
+                .addComponent(m_jbtnCollectionTally, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(m_jText)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 68, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
                 .addComponent(m_jbtnLogout)
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(5, 5, 5)
-                .addComponent(m_jbtnReservations))
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(5, 5, 5)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(m_jbtnRefresh)
-                    .addComponent(m_jbtnLogout)))
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(28, 28, 28)
-                .addComponent(m_jText))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(5, 5, 5)
+                        .addComponent(m_jbtnReservations))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(5, 5, 5)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(m_jbtnRefresh)
+                            .addComponent(m_jbtnLogout)
+                            .addComponent(m_jbtnCollectionTally, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(28, 28, 28)
+                        .addComponent(m_jText)))
+                .addGap(41, 41, 41))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -1637,11 +1661,46 @@ logger.info("Refresh action performed in map class");
        m_RootApp = (JRootApp) m_App;
         m_RootApp.closeAppView();
     }//GEN-LAST:event_m_jbtnLogoutActionPerformed
+
+    
+   
+    private void m_jbtnCollectionTallyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_m_jbtnCollectionTallyActionPerformed
+        // TODO add your handling code here:
+       // jrpcashloginid=jrpcash.getCashLoginID();
+       // System.out.println("logincash id"+jrpcashloginid);
+        System.out.println(m_App.getAppUserView().getUser().getName());
+        jrpcashloginid=m_App.getAppUserView().getUser().getName();
+       // jrpcash.getCashLoginID();
+          // JCash.showMessage(this);
+        System.out.println(jrpcashloginid);
+                JCash.showMessage(this,jrpcashloginid);
+       
+        
+        logger.info("End Logout Button :" + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S").format(new Date()));
+        logger.info("Shift Counter Tally action performed in JRetailTicketBagRest.Map class");
+        
+       
+       // JFrame frame = new JFrame ("MyCashPanel");
+    //frame.setDefaultCloseOperation (JFrame.EXIT_ON_CLOSE);
+    //JTableCover.showMessage(JRetailTicketsBagRestaurantMap.this, dlReceipts, retailTicket, m_PlaceCurrent, m_panelticket, this, false, getSplitId());
+   // JCash.showMessage(JRetailTicketsBagRestaurantMap.this,"Cash Tally From JRetailTicketBagRestMap Call");
+   // frame.getContentPane().add ((JCash) m_jcash());
+   
+    //frame.pack();
+    //frame.setVisible (true);
+         
+        // showMessage(this, "CASH TALLY");
+        
+       // m_jash.closeAppView();
+        
+    }//GEN-LAST:event_m_jbtnCollectionTallyActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel m_jPanelMap;
     private javax.swing.JLabel m_jText;
+    private javax.swing.JButton m_jbtnCollectionTally;
     private javax.swing.JButton m_jbtnLogout;
     private javax.swing.JButton m_jbtnRefresh;
     private javax.swing.JButton m_jbtnReservations;

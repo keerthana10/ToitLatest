@@ -24,6 +24,7 @@ import com.openbravo.data.loader.Session;
 import com.openbravo.pos.printer.*;
 import com.openbravo.pos.scale.DeviceScale;
 import com.openbravo.pos.scanpal2.DeviceScanner;
+import com.openbravo.pos.sales.JCash;
 
 /**
  *
