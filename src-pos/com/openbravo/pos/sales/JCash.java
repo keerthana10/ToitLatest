@@ -32,7 +32,7 @@ import com.openbravo.pos.forms.DataLogicSales;
 
 import com.openbravo.pos.customers.DataLogicCustomers;
 import com.openbravo.pos.forms.AppConfig;
-import static com.openbravo.pos.sales.JRetailKdsDetails.dlReceipts;
+
 import static com.openbravo.pos.sales.JTableCover.parentLocal;
 import com.openbravo.pos.sales.restaurant.JRetailTicketsBagRestaurantMap;
 import com.openbravo.pos.sales.restaurant.Place;
@@ -60,7 +60,7 @@ import java.util.ArrayList;
 public class JCash extends javax.swing.JDialog {
     public javax.swing.JDialog dEdior = null;
     private Properties dbp = new Properties();
-   // private DataLogicReceipts dlReceipts = null;
+  
     private DataLogicCustomers dlCustomers = null;
     
      public String[] strings = {""};
@@ -75,8 +75,8 @@ public class JCash extends javax.swing.JDialog {
     static Place place;
     static Place m_PlaceCurrent;
     public static String userRole = null;
-    //private static DataLogicReceipts localDlReceipts = null;
-   public DataLogicReceipts dlReceipts;
+   
+   
     public JRetailPanelTicket JRetailPanelTicket;
     private boolean enablity;
     //Must code
@@ -104,12 +104,13 @@ public class JCash extends javax.swing.JDialog {
      // private List<RetailTicketLineInfo> nonServedLines;
        private java.util.List<PaymentInfo> paymInfo=null;
        protected PaymentInfo pinfo;
+      // public DataLogicReceipts dlReceipts;
+       static DataLogicReceipts dlReceipts;
     //private PaymentInfo setpayment_mode;
 
     
      
-     
-   
+     //Toit Latest   
    
 //public jTableHeader jcashtable.tableHeader;
     /**
@@ -120,7 +121,13 @@ public class JCash extends javax.swing.JDialog {
     /**
      * Creates new form JRetailBufferWindow
      */
-       
+       private void init(DataLogicReceipts dlReceipts) {
+        initComponents();
+        this.setResizable(false);
+         //setDataToItemsTable(jItemsTable);
+        setVisible(true);
+        
+    }
        
     public JCash(java.awt.Frame frame, boolean modal) {
        //  System.out.println("11"); //- triggers this also
@@ -144,26 +151,28 @@ public class JCash extends javax.swing.JDialog {
         this.modename = modenam1;
     }
  
-     public static void showMessage(Component parent,String cashloginid) {
+     public static void showMessage(Component parent,String cashloginid,DataLogicReceipts dlReceipt) {
           System.out.println("13"+cashloginid);//-Triggers  here
           
         Window window = getWindow(parent);
         JCash myMsg;
+        dlReceipts=dlReceipt;
         if (window instanceof Frame) {
             myMsg = new JCash((Frame) window, true);
         } else {
             myMsg = new JCash((Dialog) window, true);
         }
         System.out.println("13-1");
-        myMsg.loadContent(cashloginid);
+        myMsg.loadContent(cashloginid,dlReceipts);
         
     }
      
   
-      public  void loadContent(String cashloginid) {
+      public  void loadContent(String cashloginid,DataLogicReceipts dlReceipt) {
             System.out.println("13-2");
         initComponents();
          System.out.println("13-3");  
+         dlReceipts=dlReceipt;
         
          String loginUserId=cashloginid;
           jcashtext.setText(loginUserId); 
@@ -198,7 +207,7 @@ public class JCash extends javax.swing.JDialog {
         System.out.println("--------------------------");
     }
       
-      
+      //TPR Release
       private static Window getWindow(Component parent) {
            System.out.println("14");
         if (parent == null) {
@@ -210,7 +219,7 @@ public class JCash extends javax.swing.JDialog {
         }
           
     }
-      
+     
       
       //-----
     
@@ -225,13 +234,7 @@ public class JCash extends javax.swing.JDialog {
 */
       
    
-      public void init(DataLogicReceipts dlReceipts) {
-
-      
-          System.out.println("init");
-         
-      }
-  
+ 
 
 
       

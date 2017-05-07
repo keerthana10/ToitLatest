@@ -44,7 +44,7 @@ import java.text.SimpleDateFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.Timer;
-
+import com.openbravo.pos.sales.DataLogicReceipts;
 public class JRetailTicketsBagRestaurantMap extends JRetailTicketsBag {
 
     private static boolean status;
@@ -1673,7 +1673,7 @@ logger.info("Refresh action performed in map class");
        // jrpcash.getCashLoginID();
           // JCash.showMessage(this);
         System.out.println(jrpcashloginid);
-                JCash.showMessage(this,jrpcashloginid);
+                JCash.showMessage(this,jrpcashloginid,dlReceipts);
        
         
         logger.info("End Logout Button :" + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S").format(new Date()));
