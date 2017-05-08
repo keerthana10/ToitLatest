@@ -28,17 +28,7 @@ import java.util.UUID;
 import java.util.regex.Pattern;
 import com.openbravo.pos.forms.AppView;
 import com.openbravo.pos.forms.BeanFactoryException;
-import com.openbravo.pos.forms.DataLogicSales;
-
-import com.openbravo.pos.customers.DataLogicCustomers;
-import com.openbravo.pos.forms.AppConfig;
-
-import static com.openbravo.pos.sales.JTableCover.parentLocal;
 import com.openbravo.pos.sales.restaurant.JRetailTicketsBagRestaurantMap;
-import com.openbravo.pos.sales.restaurant.Place;
-import com.openbravo.pos.sales.shared.JTicketsBagShared;
-import com.openbravo.pos.ticket.RetailTicketInfo;
-import com.openbravo.pos.ticket.TicketInfo;
 import com.openbravo.pos.sales.PaymentInfo;
 
 import javax.swing.*;
@@ -59,26 +49,12 @@ import java.util.ArrayList;
  */
 public class JCash extends javax.swing.JDialog {
     public javax.swing.JDialog dEdior = null;
-    private Properties dbp = new Properties();
-  
-    private DataLogicCustomers dlCustomers = null;
-    
-     public String[] strings = {""};
-    public DefaultListModel model = null;
-    public java.util.List<DiscountRateinfo> list = null;
-    public boolean updateMode = false;
-    static Component parentLocal = null;
-    static RetailTicketInfo tinfoLocal = null;
-    static RetailTicketsEditor m_panelticket;
-    static JRetailTicketsBagRestaurantMap restaurantMap;
-    static JRetailPanelTicket retpanelticket;
-    static Place place;
-    static Place m_PlaceCurrent;
-    public static String userRole = null;
-   
-   
+    private Properties dbp = new Properties();  
+          public String[] strings = {""};
+    public DefaultListModel model = null;   
+    static JRetailTicketsBagRestaurantMap restaurantMap;       
     public JRetailPanelTicket JRetailPanelTicket;
-    private boolean enablity;
+  
     //Must code
     int x = 450;
     int y = 100;
@@ -91,21 +67,21 @@ public class JCash extends javax.swing.JDialog {
      public String role;
      public  String loginUserId;
      public String roleName;
-    // public javax.swing.JTable jcashtable;
-      public javax.swing.table.TableModel cashtablemodel;
-       public javax.swing.table.DefaultTableModel cashtabmodel;
-        public javax.swing.table.JTableHeader cashheader;
+     public javax.swing.table.TableModel cashtablemodel;
+     public javax.swing.table.DefaultTableModel cashtabmodel;
+      public javax.swing.table.JTableHeader cashheader;
+      
     public String[ ][ ] datacell=new String[10][10];
     public int rows;
     public int cols;
      public String[ ] datastring=new String[100];
      private String modenam;
       public String modename;
-     // private List<RetailTicketLineInfo> nonServedLines;
+     
        private java.util.List<PaymentInfo> paymInfo=null;
        protected PaymentInfo pinfo;
-      // public DataLogicReceipts dlReceipts;
-       static DataLogicReceipts dlReceipts;
+      // public DataLogicReceipts dlReceipts1;
+         static DataLogicReceipts dlReceipts;
     //private PaymentInfo setpayment_mode;
 
     
@@ -121,10 +97,9 @@ public class JCash extends javax.swing.JDialog {
     /**
      * Creates new form JRetailBufferWindow
      */
-       private void init(DataLogicReceipts dlReceipts) {
+       private void init(DataLogicReceipts dlReceipt) {
         initComponents();
-        this.setResizable(false);
-         //setDataToItemsTable(jItemsTable);
+        this.setResizable(false);       
         setVisible(true);
         
     }
@@ -139,21 +114,11 @@ public class JCash extends javax.swing.JDialog {
         //  System.out.println("12");
         super(dialog, true);
         setBounds(x, y, width, height);
-
     }
-  
     
-     public String getModenam() {
-        return modename;
-    }
-
-    public void setModenam(String modenam1) {
-        this.modename = modenam1;
-    }
  
      public static void showMessage(Component parent,String cashloginid,DataLogicReceipts dlReceipt) {
-          System.out.println("13"+cashloginid);//-Triggers  here
-          
+          //System.out.println("13"+cashloginid);//-Triggers  here        
         Window window = getWindow(parent);
         JCash myMsg;
         dlReceipts=dlReceipt;
@@ -162,40 +127,32 @@ public class JCash extends javax.swing.JDialog {
         } else {
             myMsg = new JCash((Dialog) window, true);
         }
-        System.out.println("13-1");
+       // System.out.println("13-1");
         myMsg.loadContent(cashloginid,dlReceipts);
         
     }
      
   
       public  void loadContent(String cashloginid,DataLogicReceipts dlReceipt) {
-            System.out.println("13-2");
-        initComponents();
+           // System.out.println("13-2");
+          initComponents();
          System.out.println("13-3");  
-         dlReceipts=dlReceipt;
-        
-         String loginUserId=cashloginid;
-          jcashtext.setText(loginUserId); 
-          
-          
-         System.out.println("Cash Header color set");
-
-                printDebugData(jcashtable);
-        
-         
-         setVisible(true);
-          
-             
+        // dlReceipts=dlReceipt;
+          String loginUserId=cashloginid;
+          jcashtext.setText(loginUserId);           
+          System.out.println("Cash Header color set");
+          printDebugData(jcashtable,dlReceipts);
+          setVisible(true);                     
           
       }
       
       
-      private void printDebugData(JTable table) {
+      private void printDebugData(JTable table,DataLogicReceipts dlReceipt) {
         int numRows = table.getRowCount();
         int numCols = table.getColumnCount();
         System.out.println("Rows:"+numRows+"Columns:"+numCols);
         javax.swing.table.TableModel model = table.getModel();
- 
+           dlReceipts=dlReceipt;
         System.out.println("Value of data: ");
         for (int i=0; i < numRows; i++) {
             System.out.print("    row " + i + ":");
@@ -209,7 +166,7 @@ public class JCash extends javax.swing.JDialog {
       
       //TPR Release
       private static Window getWindow(Component parent) {
-           System.out.println("14");
+          // System.out.println("14");
         if (parent == null) {
             return new JFrame();
         } else if (parent instanceof Frame || parent instanceof Dialog) {
@@ -220,30 +177,17 @@ public class JCash extends javax.swing.JDialog {
           
     }
      
-      
-      //-----
-    
-     /* public void init(AppView app) throws BeanFactoryException {
-        System.out.println("inside init");
-        m_App = app;
-        //dlSystem = (DataLogicSystem) m_App.getBean("com.openbravo.pos.forms.DataLogicSystem");
-        //dlSales = (DataLogicSales) m_App.getBean("com.openbravo.pos.forms.DataLogicSales");
-       // dlCustomers = (DataLogicCustomers) m_App.getBean("com.openbravo.pos.customers.DataLogicCustomers");
-        dlReceipts = (DataLogicReceipts) m_App.getBean("com.openbravo.pos.sales.DataLogicReceipts");
+       public String getModenam() {
+        return modename;
+    }
 
-*/
-      
+    public void setModenam(String modenam1) {
+        this.modename = modenam1;
+    }        
    
- 
-
-
-      
-
-        
-       
      
-        
-   
+       
+           
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -399,39 +343,32 @@ public class JCash extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void button1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button1ActionPerformed
-         printDebugData(jcashtable);
+         printDebugData(jcashtable,dlReceipts);
           jcashtable.setBorder(BorderFactory.createEmptyBorder(2, 3, 2, 3));
          jcashtable.setIntercellSpacing(new java.awt.Dimension(10, 10));
-         jcashtable.getTableHeader().setBackground(Color.GRAY);
-          
+         jcashtable.getTableHeader().setBackground(Color.GRAY);          
            jcashtable.getTableHeader().setSize(20, 20);
-printCalculateDifferenceData(jcashtable);
-
-
-//         JTable jcashtable1=jcashtable;
-//        datastring=getTableData("---");
-//         System.out.println("Cell Dta"+datastring);
-// cols=(int)jcashtable1.getColumnCount();
-// rows=(int)jcashtable1.getRowCount();
-//    System.out.println("Cell rowscolumns"+cols+rows);     
-//    datacell=getTableData();
-//   System.out.println("Dtacell Vlaue check"+datacell);
-       
-
-     
+           
+         printCalculateDifferenceData(jcashtable,dlReceipts);
+            
     }
     
    
-    private void printCalculateDifferenceData(JTable table) {
+    private void printCalculateDifferenceData(JTable table,DataLogicReceipts dlReceipt) {
         System.out.println("From Difference Calculation Function");
         double A,B,C,expr;
-        String mod_nam;       
+        String mod_nam;   
+        dlReceipts=dlReceipt;
       paymInfo = new ArrayList<PaymentInfo>();   
-            
+
         int numRows = table.getRowCount();
         int numCols = table.getColumnCount();
         System.out.println("Rows:"+numRows+"Columns:"+numCols);
         javax.swing.table.TableModel model = table.getModel();
+       
+        table.getColumnModel().getColumn(4).setMinWidth(0);
+         table.getColumnModel().getColumn(4).setMaxWidth(0);
+            table.getColumnModel().getColumn(4).setWidth(0);
  
         System.out.println("Value of data: ");
         for (int i=0 ; i < numRows; i++) {
@@ -454,10 +391,10 @@ printCalculateDifferenceData(jcashtable);
                 
                 try{
                  expr = A + B - C;
-                 pinfo.setTotal(expr);
-                System.out.print("  " + pinfo.getPayment_mode()+pinfo.getTotal());
-                 paymInfo.add(pinfo);                          
-                //dlReceipts.insertShiftCollection(modename , expr);             
+               //  pinfo.setTotal(expr);
+                System.out.print("  " +modename+expr);
+               //  paymInfo.add(pinfo);                          
+                dlReceipts.insertShiftCollection(modename,expr);             
                                                      
                model.setValueAt(0000 , i , ++j);
                 }catch (ArithmeticException ex) {
@@ -470,14 +407,7 @@ printCalculateDifferenceData(jcashtable);
         }
         System.out.println("--------------------------");
     }
-//     public Object getValueAt(int row,int col)
-//     { 
-//         return jcashtable[row][col];
-//     }
-     
-//    public interface TableModelListener extends EventListener {
-//  public void tableChanged(TableModelEvent e);
-//}
+
     
     public String[][] getTableData()
     {
