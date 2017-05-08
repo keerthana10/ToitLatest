@@ -1666,32 +1666,15 @@ logger.info("Refresh action performed in map class");
    
     private void m_jbtnCollectionTallyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_m_jbtnCollectionTallyActionPerformed
         // TODO add your handling code here:
-       // jrpcashloginid=jrpcash.getCashLoginID();
-       // System.out.println("logincash id"+jrpcashloginid);
+    
         System.out.println(m_App.getAppUserView().getUser().getName());
-        jrpcashloginid=m_App.getAppUserView().getUser().getName();
-       // jrpcash.getCashLoginID();
-          // JCash.showMessage(this);
+        jrpcashloginid=m_App.getAppUserView().getUser().getName();    
         System.out.println(jrpcashloginid);
-                JCash.showMessage(this,jrpcashloginid,dlReceipts);
-       
-        
+        JCash.showMessage(this,jrpcashloginid,dlReceipts);      
         logger.info("End Logout Button :" + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S").format(new Date()));
         logger.info("Shift Counter Tally action performed in JRetailTicketBagRest.Map class");
         
        
-       // JFrame frame = new JFrame ("MyCashPanel");
-    //frame.setDefaultCloseOperation (JFrame.EXIT_ON_CLOSE);
-    //JTableCover.showMessage(JRetailTicketsBagRestaurantMap.this, dlReceipts, retailTicket, m_PlaceCurrent, m_panelticket, this, false, getSplitId());
-   // JCash.showMessage(JRetailTicketsBagRestaurantMap.this,"Cash Tally From JRetailTicketBagRestMap Call");
-   // frame.getContentPane().add ((JCash) m_jcash());
-   
-    //frame.pack();
-    //frame.setVisible (true);
-         
-        // showMessage(this, "CASH TALLY");
-        
-       // m_jash.closeAppView();
         
     }//GEN-LAST:event_m_jbtnCollectionTallyActionPerformed
 

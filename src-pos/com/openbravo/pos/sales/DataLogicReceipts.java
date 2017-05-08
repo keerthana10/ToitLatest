@@ -1012,10 +1012,21 @@ new PreparedSentence(s, "UPDATE SERVEDTRANSACTION SET KOTDATE = NOW(),TXSTATUS =
     }
  
  
-// public void insertShiftCollection(String mode,double total) {
-     public final void insertShiftCollection(String mode) {
-      System.out.println(" Mode"+"Total"+mode);
-//        String uniqtableid=uniq_tableid;
+
+     public void insertShiftCollection(String mode,double diff) {
+      System.out.println(" Mode"+mode+"Total"+diff);
+
+      Object[] values = new Object[] { UUID.randomUUID().toString(),mode,diff};
+      Datas[] datas = new Datas[] {Datas.STRING,Datas.STRING,Datas.DOUBLE};
+     try { 
+  new PreparedSentence(s, "INSERT INTO SHIFTCOLLECTION (ID,PAYMENT_MODE,TXNDATE,TOTAL) VALUES (?,?,NOW(),?)",new SerializerWriteBasicExt(datas, new int[]{ 0, 1, 2})).exec(values);
+
+            } catch (BasicException ex) {
+                ex.printStackTrace();
+                Logger.getLogger(DataLogicReceipts.class.getName()).log(Level.SEVERE, null, ex);
+            }//end catch
+ }//end fn.
+      //        String uniqtableid=uniq_tableid;
 //      
 //        int begin=0;
 //        System.out.println("uniq table id"+uniq_tableid);
@@ -1041,6 +1052,6 @@ new PreparedSentence(s, "UPDATE SERVEDTRANSACTION SET KOTDATE = NOW(),TXSTATUS =
 //            }//end if
 //        }//end for
 //      
-    }//end fn.
+   
 
 }//end class
