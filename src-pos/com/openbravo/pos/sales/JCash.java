@@ -13,6 +13,7 @@ import com.openbravo.basic.BasicException;
 import com.openbravo.data.user.EditorRecord;
 import com.openbravo.data.user.DirtyManager;
 import com.openbravo.basic.BasicException;
+import com.openbravo.data.loader.SentenceList;
 import java.awt.Component;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -29,7 +30,7 @@ import java.util.regex.Pattern;
 import com.openbravo.pos.forms.AppView;
 import com.openbravo.pos.forms.BeanFactoryException;
 import com.openbravo.pos.sales.restaurant.JRetailTicketsBagRestaurantMap;
-import com.openbravo.pos.sales.PaymentInfo;
+import com.openbravo.pos.sales.ShiftTallyLineInfo;
 
 import javax.swing.*;
 import javax.swing.table.*;
@@ -40,7 +41,8 @@ import javax.swing.JTable;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import com.openbravo.pos.sales.DataLogicReceipts;
-import com.openbravo.pos.sales.PaymentInfo;
+import com.openbravo.pos.sales.ShiftTallyLineInfo;
+import com.openbravo.pos.forms.DataLogicSales;
 import java.util.ArrayList;
 
 /**
@@ -78,10 +80,12 @@ public class JCash extends javax.swing.JDialog {
      private String modenam;
       public String modename;
      
-       private java.util.List<PaymentInfo> paymInfo=null;
-       protected PaymentInfo pinfo;
+       private java.util.List<ShiftTallyLineInfo> shiftInfo=null;
+       protected ShiftTallyLineInfo sinfo;
       // public DataLogicReceipts dlReceipts1;
          static DataLogicReceipts dlReceipts;
+         public DataLogicSales dlsales;
+         private SentenceList sinfolist;
     //private PaymentInfo setpayment_mode;
 
     
@@ -97,7 +101,7 @@ public class JCash extends javax.swing.JDialog {
     /**
      * Creates new form JRetailBufferWindow
      */
-       private void init(DataLogicReceipts dlReceipt) {
+       private void init(DataLogicReceipts dlReceipt,ShiftTallyLineInfo sinfo) {
         initComponents();
         this.setResizable(false);       
         setVisible(true);
@@ -117,7 +121,7 @@ public class JCash extends javax.swing.JDialog {
     }
     
  
-     public static void showMessage(Component parent,String cashloginid,DataLogicReceipts dlReceipt) {
+     public static void showMessage(Component parent,String cashloginid,DataLogicReceipts dlReceipt,ShiftTallyLineInfo sinfo,DataLogicSales dlsales) {
           //System.out.println("13"+cashloginid);//-Triggers  here        
         Window window = getWindow(parent);
         JCash myMsg;
@@ -128,12 +132,12 @@ public class JCash extends javax.swing.JDialog {
             myMsg = new JCash((Dialog) window, true);
         }
        // System.out.println("13-1");
-        myMsg.loadContent(cashloginid,dlReceipts);
+        myMsg.loadContent(cashloginid,dlReceipts,sinfo,dlsales);
         
     }
      
   
-      public  void loadContent(String cashloginid,DataLogicReceipts dlReceipt) {
+      public  void loadContent(String cashloginid,DataLogicReceipts dlReceipt,ShiftTallyLineInfo sinfo,DataLogicSales dlsales) {
            // System.out.println("13-2");
           initComponents();
          System.out.println("13-3");  
@@ -141,13 +145,13 @@ public class JCash extends javax.swing.JDialog {
           String loginUserId=cashloginid;
           jcashtext.setText(loginUserId);           
           System.out.println("Cash Header color set");
-          printDebugData(jcashtable,dlReceipts);
+        //  printDebugData(jcashtable,dlReceipts);
           setVisible(true);                     
           
       }
       
       
-      private void printDebugData(JTable table,DataLogicReceipts dlReceipt) {
+      private void printDebugData(JTable table,DataLogicReceipts dlReceipt,ShiftTallyLineInfo sinfo,DataLogicSales dlsales) {
         int numRows = table.getRowCount();
         int numCols = table.getColumnCount();
         System.out.println("Rows:"+numRows+"Columns:"+numCols);
@@ -343,23 +347,22 @@ public class JCash extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void button1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button1ActionPerformed
-         printDebugData(jcashtable,dlReceipts);
+      //   printDebugData(jcashtable,dlReceipts);
           jcashtable.setBorder(BorderFactory.createEmptyBorder(2, 3, 2, 3));
          jcashtable.setIntercellSpacing(new java.awt.Dimension(10, 10));
          jcashtable.getTableHeader().setBackground(Color.GRAY);          
-           jcashtable.getTableHeader().setSize(20, 20);
-           
-         printCalculateDifferenceData(jcashtable,dlReceipts);
+         jcashtable.getTableHeader().setSize(20, 20);           
+         printCalculateDifferenceData(jcashtable,dlReceipts,sinfo,dlsales);
             
     }
     
    
-    private void printCalculateDifferenceData(JTable table,DataLogicReceipts dlReceipt) {
+    private void printCalculateDifferenceData(JTable table,DataLogicReceipts dlReceipt,ShiftTallyLineInfo pinfo,DataLogicSales dlsales) {
         System.out.println("From Difference Calculation Function");
         double A,B,C,expr;
         String mod_nam;   
         dlReceipts=dlReceipt;
-      paymInfo = new ArrayList<PaymentInfo>();   
+      shiftInfo = new ArrayList<ShiftTallyLineInfo>();   
 
         int numRows = table.getRowCount();
         int numCols = table.getColumnCount();
@@ -463,9 +466,30 @@ public String[] getTableData(String delim)
   
   
     }//GEN-LAST:event_button1ActionPerformed
-
+private void printShiftCollection(JTable table,DataLogicReceipts dlReceipt,ShiftTallyLineInfo sinfo,DataLogicSales dlsales)
+{  java.util.List<ShiftTallyLineInfo> shiftTablesList = null;
+   // ShiftTallyLineInfo s = (ShiftTallyLineInfo) dlsales.getShiftTallyInfoList();
+  // shiftTablesList.add(s);
+sinfolist=dlsales.getShiftTallyInfoList();
+        try {
+            java.util.List<ShiftTallyLineInfo> sinfolist_list = sinfolist.list();
+        
+ 
+    for(ShiftTallyLineInfo sinfo1:sinfolist_list)
+    {
+        System.out.println(sinfo1.getPayment_mode());
+        System.out.println(sinfo1.getTotal());
+         System.out.println(sinfo1.getTxndate());
+         System.out.println(sinfo1.getId());
+    }
+    } catch (BasicException ex) {
+            Logger.getLogger(JCash.class.getName()).log(Level.SEVERE, null, ex);
+        }
+}
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
       // TODO add your handling code here:
+        
+        printShiftCollection(jcashtable,dlReceipts,sinfo,dlsales);
         System.exit(0);
     }//GEN-LAST:event_jButton1ActionPerformed
             

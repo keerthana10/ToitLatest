@@ -1006,9 +1006,9 @@ new PreparedSentence(s, "UPDATE SERVEDTRANSACTION SET KOTDATE = NOW(),TXSTATUS =
          Object[] record = (Object[]) new StaticSentence(s, "SELECT NAME FROM PEOPLE WHERE ID='" + id + "'", SerializerWriteString.INSTANCE, new SerializerReadBasic(new Datas[]{Datas.STRING})).find();
         return record == null ? "" :  record[0].toString();
  }
- public final List<PaymentInfo> getPaymentList() throws BasicException {
+ public final List<ShiftTallyLineInfo> getPaymentList() throws BasicException {
 //System.out.println("orderitem id"+orderitemid);
-        return (List<PaymentInfo>) new StaticSentence(s, "SELECT ID,RECEIPT,STATUSTOTAL,TRANSID,CHEQUENOS,STAFF FROM PAYMENTS",null, new SerializerReadClass(ServedTransactInfo.class)).list();
+        return (List<ShiftTallyLineInfo>) new StaticSentence(s, "SELECT ID,RECEIPT,STATUSTOTAL,TRANSID,CHEQUENOS,STAFF FROM PAYMENTS",null, new SerializerReadClass(ServedTransactInfo.class)).list();
     }
  
  

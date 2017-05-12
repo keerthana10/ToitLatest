@@ -79,6 +79,8 @@ import java.util.Calendar;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import com.openbravo.pos.sales.restaurant.JRetailTicketsBagRestaurantMap;
+import com.openbravo.pos.sales.ShiftTallyLineInfo;
 
 /**
  *
@@ -4307,5 +4309,18 @@ public class DataLogicSales extends BeanFactoryDataSingle {
 
     public final SentenceList getTables() {
         return new StaticSentence(s, "SELECT ID, NAME FROM PLACES  ORDER BY NAME ", null, JPlacesInfo.getSerializerRead());
+    }
+    public final SentenceList getShiftTallyInfoList() {
+        return new StaticSentence(s, "SELECT ID,PAYMENT_MODE,TXNDATE,TOTAL FROM SHIFTCOLLECTION ORDER BY TXNDATE", null, new SerializerRead() {
+             
+            public Object readValues(DataRead dr) throws BasicException {
+                return new ShiftTallyLineInfo(
+                        dr.getString(1),
+                        dr.getString(2),
+                        dr.getTimestamp(3),
+                        dr.getDouble(4));
+                
+            }
+        });
     }
 }

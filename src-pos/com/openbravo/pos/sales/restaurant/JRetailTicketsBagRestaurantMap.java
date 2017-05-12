@@ -45,6 +45,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.Timer;
 import com.openbravo.pos.sales.DataLogicReceipts;
+import com.openbravo.pos.forms.DataLogicSales;
+import com.openbravo.pos.sales.ShiftTallyLineInfo;
 public class JRetailTicketsBagRestaurantMap extends JRetailTicketsBag {
 
     private static boolean status;
@@ -63,7 +65,7 @@ public class JRetailTicketsBagRestaurantMap extends JRetailTicketsBag {
     private Place m_PlaceClipboard;
     private CustomerInfo customer;
     public DataLogicReceipts dlReceipts = null;
-    private DataLogicSales dlSales = null;
+    public DataLogicSales dlSales = null;
     private DataLogicSystem dlSystem = null;
     private AppView m_app;
     private static String tableName;
@@ -85,6 +87,7 @@ public class JRetailTicketsBagRestaurantMap extends JRetailTicketsBag {
           public JCash m_jcash;
           private JRetailPanelTicket jrpcash;
          public String jrpcashloginid;
+         public ShiftTallyLineInfo shiftinfo;
 
     /**
      * Creates new form JTicketsBagRestaurant
@@ -1670,7 +1673,8 @@ logger.info("Refresh action performed in map class");
         System.out.println(m_App.getAppUserView().getUser().getName());
         jrpcashloginid=m_App.getAppUserView().getUser().getName();    
         System.out.println(jrpcashloginid);
-        JCash.showMessage(this,jrpcashloginid,dlReceipts);      
+       
+        JCash.showMessage(this,jrpcashloginid,dlReceipts,shiftinfo,dlSales);      
         logger.info("End Logout Button :" + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S").format(new Date()));
         logger.info("Shift Counter Tally action performed in JRetailTicketBagRest.Map class");
         

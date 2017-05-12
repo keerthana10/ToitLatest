@@ -10,17 +10,42 @@ import com.openbravo.data.loader.SerializableRead;
 import com.openbravo.data.loader.SerializableWrite;
 import java.io.Serializable;
 import com.openbravo.pos.sales.DataLogicReceipts;
+import java.util.Date;
 
 /**
  *
  * @author sysfore
  */
-public class PaymentInfo implements SerializableRead, SerializableWrite ,Serializable{
-    private static final long serialVersionUID = 7640633837719L;
+public class ShiftTallyLineInfo implements SerializableRead, SerializableWrite ,Serializable{
+//   private static final long serialVersionUID = 7640633837719L;
+    
     private String id;
     private String payment_mode;
-    private double total;
+    private Date txndate;
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public Date getTxndate() {
+        return txndate;
+    }
+
+    public void setTxndate(java.util.Date txndate) {
+        this.txndate = txndate;
+    }
+    private double total;
+    
+ public ShiftTallyLineInfo(String id, String payment_mode,Date txndate, double total) {
+        this.id = id;
+        this.payment_mode = payment_mode;
+        this.txndate = txndate;
+        this.total = total;
+    }
     public String getPayment_mode() {
         return payment_mode;
     }
@@ -52,20 +77,20 @@ public class PaymentInfo implements SerializableRead, SerializableWrite ,Seriali
 
     
     }
-    public PaymentInfo()
+    public ShiftTallyLineInfo()
     {
         payment_mode="Cash";
         total=0;
     }
-    public PaymentInfo copyTicket() {
+    public ShiftTallyLineInfo copyTicket() {
           System.out.println("copyPayment");
-        PaymentInfo t = new PaymentInfo();
+        ShiftTallyLineInfo t = new ShiftTallyLineInfo();
         t.payment_mode=payment_mode;
         t.total=total;
         return t;
     }
 
-    public PaymentInfo(String payment_mode,double total)
+    public ShiftTallyLineInfo(String payment_mode,double total)
     {
         this.payment_mode=payment_mode;
         this.total=total;
